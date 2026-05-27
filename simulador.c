@@ -67,9 +67,46 @@ int main(int argc, char *argv[]) {
 
         return 1;
     }
-
-
-
     
+    // Variáveis para leitura
+    unsigned char bytes[4];
+
+    unsigned int endereco;
+
+    unsigned int tag;
+    unsigned int indice;
+    unsigned int offset;
+
+    // Leitura do binario
+    while (fread(bytes, 1, 4, arquivo) == 4) {
+
+        /*
+            Monta int de 32 bits tratando big endian
+        */
+
+        endereco = (bytes[0] << 24) | (bytes[1] << 16) | (bytes[2] << 8) | bytes[3];
+
+        // Extrai offset
+        offset = endereco & ((1 << bits_offset) - 1);
+
+        // Extrai índice
+        indice = (endereco >> bits_offset) & ((1 << bits_indice) - 1);
+
+        // Extrai tag
+        tag = endereco >> (bits_offset + bits_indice);
+
+        // Mostra resultados
+        printf("Endereco: 0x%08X\n", endereco);
+
+        printf("Tag: %u\n", tag);
+
+        printf("Indice: %u\n", indice);
+
+        printf("Offset: %u\n", offset);
+
+    }
+
+
+    fclose(arquivo);
     return 0;
 }

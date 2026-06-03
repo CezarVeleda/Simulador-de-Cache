@@ -49,7 +49,7 @@ Cache *criarCache(int nsets, int bsize, int assoc) {
 }
 
 int escolherVitima(Cache *cache, int indice, char politica) {
-    if (politica == 'R') {
+    if (politica == 'R') { // criar um teto para evitar quebrar a randomicidade //
         return rand() % cache->assoc;
     }
 
@@ -77,7 +77,7 @@ void liberarCache(Cache *cache) {
 }
 
 int main(int argc, char *argv[]) {
-    // Semente fixa para garantir o determinismo no corretor automático
+    
     srand(0);
 
     // Verifica argumentos
@@ -140,7 +140,7 @@ int main(int argc, char *argv[]) {
     
     /* Leitura do binário */
     while (fread(bytes, 1, 4, arquivo) == 4) {
-
+        // little endiando x big endian
         endereco = (bytes[0] << 24) | (bytes[1] << 16) | (bytes[2] << 8) | bytes[3];
 
         /* Extrai offset, indice e tag */

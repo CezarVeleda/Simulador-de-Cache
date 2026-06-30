@@ -77,8 +77,7 @@ void liberarCache(Cache *cache) {
 }
 
 int main(int argc, char *argv[]) {
-    
-    srand(0);
+    srand(time(NULL));
 
     // Verifica argumentos
     if (argc != 7) {
